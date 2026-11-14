@@ -1,0 +1,12 @@
+{
+  "name": "dsh-turn-alert",
+  "description": "Flash the taskbar and raise a system notification when a turn finishes",
+  "version": "1.2.1",
+  "entry": {
+    "name": "dsh-turn-alert",
+    "inject": []
+  },
+  "client": {
+    "platform": "web"
+  }
+}

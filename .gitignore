@@ -1,0 +1,18 @@
+# Build output and local packaging artifacts.
+dist/
+*.tgz
+
+# Dependencies
+node_modules/
+
+# Editor and OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local scratch
+_*.cjs
+_*.mjs
+*.log

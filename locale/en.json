@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Turn alert",
+    "description": "Flash the taskbar button and raise a system notification when a turn finishes. The headline is the conversation title, and the switches live in Settings so a change applies without a restart.",
+    "detail": "docs/DETAIL.md"
+  }
+}

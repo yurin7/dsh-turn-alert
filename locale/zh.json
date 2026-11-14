@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "回答完成提醒",
+    "description": "一轮对话结束时闪烁 Windows 任务栏图标并弹出系统通知，通知标题就是当前对话标题。开关在设置里实时可改，改完不用重启。",
+    "detail": "docs/DETAIL.zh.md"
+  }
+}

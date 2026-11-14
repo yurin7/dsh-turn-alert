@@ -1,0 +1,7 @@
+# Normalize line endings so the published files match what the npm package ships.
+* text=auto eol=lf
+
+# Binary-ish assets stay untouched.
+*.png binary
+*.jpg binary
+*.webp binary

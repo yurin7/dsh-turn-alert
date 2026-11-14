@@ -6,7 +6,7 @@ Flash the Windows taskbar button and raise a system notification when a turn fin
 
 DeepSeek Harness raises no desktop signal of its own when a reply completes. This plugin watches the Session event stream for `turn/end` and, for each turn worth interrupting you for, flashes the taskbar and raises a toast.
 
-![A Windows notification whose headline is the conversation title, with the app button flashing on the taskbar behind it](docs/preview.notify.en.svg)
+![A Windows notification whose headline is the conversation title, reading "Turn completed."](docs/preview-toast.png)
 
 ## Install
 
@@ -38,7 +38,7 @@ Requires `dsh` 0.2.2-rc.1 or newer, on Windows.
 
 Both are skipped by default for subagent turns: those are internal delegation, not a reply you are waiting on. Turn them on with **子代理也提醒**.
 
-![The turn alert settings section with its switches and the open notification language menu](docs/preview.settings.en.svg)
+![The Turn alert settings section: a master switch, the taskbar flash, notification, focus, subagent and failure switches, a cooldown field, the notification language picker, and the custom headline and body fields](docs/preview-settings.png)
 
 ## Settings
 

@@ -1,3 +1,3 @@
-![A Windows notification whose headline is the conversation title, with the app button flashing on the taskbar behind it](preview.notify.en.svg)
+![A Windows notification whose headline is the conversation title, reading "Turn completed."](preview-toast.png)
 
-![The turn alert settings section: switches for the taskbar flash, the notification, subagent turns and the conversation title, plus a notification language picker](preview.settings.en.svg)
+![The Turn alert settings section: a master switch, the taskbar flash, notification, focus, subagent and failure switches, a cooldown field, the notification language picker, and the custom headline and body fields](preview-settings.png)

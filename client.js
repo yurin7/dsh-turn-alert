@@ -36,8 +36,8 @@ window.__ModuleLoader__.load({
       zh: {
         sectionTitle: '回答完成提醒',
         sectionDesc: '一轮对话结束时，闪烁任务栏图标并弹出系统通知。',
-        enabled: '启用提醒',
-        enabledHint: '关闭后完全不提醒。',
+        enabled: '启用回答完成提醒',
+        enabledHint: '总开关。关闭后下方设置会被禁用。',
         flashTaskbar: '闪烁任务栏图标',
         flashTaskbarHint: '一轮结束时让任务栏图标闪烁，直到你切回窗口。',
         notify: '系统通知',
@@ -70,8 +70,8 @@ window.__ModuleLoader__.load({
       en: {
         sectionTitle: 'Turn alert',
         sectionDesc: 'Flashes the taskbar button and raises a system notification when a turn finishes.',
-        enabled: 'Enable alerts',
-        enabledHint: 'Turning this off silences every alert.',
+        enabled: 'Enable turn alerts',
+        enabledHint: 'Master switch. Turning it off disables the settings below.',
         flashTaskbar: 'Flash the taskbar button',
         flashTaskbarHint: 'Flashes until you switch back to the window.',
         notify: 'System notification',
@@ -104,8 +104,8 @@ window.__ModuleLoader__.load({
       ja: {
         sectionTitle: '応答完了の通知',
         sectionDesc: 'ターン終了時にタスクバーを点滅させ、システム通知を表示します。',
-        enabled: '通知を有効にする',
-        enabledHint: 'オフにするとすべての通知が止まります。',
+        enabled: '応答完了の通知を有効化',
+        enabledHint: '全体スイッチ。オフにすると以下の設定は無効になります。',
         flashTaskbar: 'タスクバーを点滅',
         flashTaskbarHint: 'ウィンドウに戻るまで点滅します。',
         notify: 'システム通知',
@@ -138,8 +138,8 @@ window.__ModuleLoader__.load({
       ko: {
         sectionTitle: '응답 완료 알림',
         sectionDesc: '턴이 끝나면 작업 표시줄을 깜박이고 시스템 알림을 표시합니다.',
-        enabled: '알림 사용',
-        enabledHint: '끄면 모든 알림이 중지됩니다.',
+        enabled: '응답 완료 알림 사용',
+        enabledHint: '전체 스위치. 끄면 아래 설정을 사용할 수 없습니다.',
         flashTaskbar: '작업 표시줄 깜박임',
         flashTaskbarHint: '창으로 돌아올 때까지 깜박입니다.',
         notify: '시스템 알림',
@@ -172,8 +172,8 @@ window.__ModuleLoader__.load({
       es: {
         sectionTitle: 'Aviso al terminar el turno',
         sectionDesc: 'Hace parpadear la barra de tareas y muestra una notificación al terminar un turno.',
-        enabled: 'Activar avisos',
-        enabledHint: 'Al desactivarlo se silencian todos los avisos.',
+        enabled: 'Activar avisos de turno',
+        enabledHint: 'Interruptor general. Al desactivarlo se bloquean los ajustes de abajo.',
         flashTaskbar: 'Parpadear la barra de tareas',
         flashTaskbarHint: 'Parpadea hasta que vuelvas a la ventana.',
         notify: 'Notificación del sistema',
@@ -206,8 +206,8 @@ window.__ModuleLoader__.load({
       fr: {
         sectionTitle: 'Alerte de fin de tour',
         sectionDesc: 'Fait clignoter la barre des tâches et affiche une notification à la fin d’un tour.',
-        enabled: 'Activer les alertes',
-        enabledHint: 'Désactiver coupe toutes les alertes.',
+        enabled: 'Activer les alertes de tour',
+        enabledHint: 'Interrupteur général. Le désactiver désactive les réglages ci-dessous.',
         flashTaskbar: 'Faire clignoter la barre des tâches',
         flashTaskbarHint: 'Clignote jusqu’au retour à la fenêtre.',
         notify: 'Notification système',
@@ -240,8 +240,8 @@ window.__ModuleLoader__.load({
       de: {
         sectionTitle: 'Benachrichtigung nach Antwort',
         sectionDesc: 'Lässt die Taskleiste blinken und zeigt eine Systembenachrichtigung, wenn ein Turn endet.',
-        enabled: 'Benachrichtigungen aktivieren',
-        enabledHint: 'Ausschalten unterdrückt jede Benachrichtigung.',
+        enabled: 'Turn-Benachrichtigungen aktivieren',
+        enabledHint: 'Hauptschalter. Ausschalten deaktiviert die Einstellungen darunter.',
         flashTaskbar: 'Taskleiste blinken lassen',
         flashTaskbarHint: 'Blinkt, bis du zum Fenster zurückkehrst.',
         notify: 'Systembenachrichtigung',
@@ -274,8 +274,8 @@ window.__ModuleLoader__.load({
       ru: {
         sectionTitle: 'Уведомление о завершении',
         sectionDesc: 'Мигает кнопкой на панели задач и показывает системное уведомление по завершении хода.',
-        enabled: 'Включить уведомления',
-        enabledHint: 'Отключение гасит все уведомления.',
+        enabled: 'Включить уведомления о ходе',
+        enabledHint: 'Главный переключатель. Отключение блокирует настройки ниже.',
         flashTaskbar: 'Мигать на панели задач',
         flashTaskbarHint: 'Мигает, пока вы не вернётесь в окно.',
         notify: 'Системное уведомление',
@@ -308,8 +308,8 @@ window.__ModuleLoader__.load({
       pt: {
         sectionTitle: 'Aviso ao concluir',
         sectionDesc: 'Pisca a barra de tarefas e mostra uma notificação do sistema quando um turno termina.',
-        enabled: 'Ativar avisos',
-        enabledHint: 'Desligar silencia todos os avisos.',
+        enabled: 'Ativar avisos de turno',
+        enabledHint: 'Interruptor geral. Desligá-lo desativa as opções abaixo.',
         flashTaskbar: 'Piscar a barra de tarefas',
         flashTaskbarHint: 'Pisca até você voltar à janela.',
         notify: 'Notificação do sistema',
@@ -421,68 +421,116 @@ window.__ModuleLoader__.load({
       }
 
       const value = snapshot.value
-      const disabled = snapshot.writable === false
+      const readOnly = snapshot.writable === false
+      const masterOn = pick(value.enabled, true)
+      // Everything below the master switch is inert while alerts are off, so a
+      // half-edited card never implies an alert that cannot fire.
+      const locked = readOnly || !masterOn
+      const busyNow = busy !== null
       const languageOptions = LANGUAGE_IDS.map((id) => ({
         id,
         label: id === 'auto' ? c.languageAuto : id,
       }))
 
       return h('div', { style: s.page },
+        // The page head sits outside the card, matching how the shell's own
+        // settings pages title themselves: the section is already named in the
+        // nav rail, so this repeats it as a page heading rather than as a card
+        // caption.
+        h('div', { style: s.pageHead },
+          h('div', { style: s.pageHeadText },
+            h('h2', { style: s.pageTitle }, c.sectionTitle),
+            h('p', { style: s.pageDesc }, c.sectionDesc)),
+        ),
+
         h('div', { style: s.card },
-          h('div', { style: s.cardHead },
-            h('div', { style: s.cardTitle }, c.sectionTitle),
-            h('p', { style: s.cardDesc }, c.sectionDesc)),
-          SWITCHES.map((field) => h(Row, {
-            key: field,
-            title: c.label(field),
-            hint: c.hint(field),
-            checked: pick(value[field], false),
-            disabled: disabled || busy !== null,
-            onChange: (next) => write(field, next),
-          })),
-          NUMBERS.map((field) => h(NumberRow, {
-            key: field,
-            title: c.label(field),
-            hint: c.hint(field),
-            value: pick(value[field], 3),
-            disabled: disabled || busy !== null,
-            onCommit: (next) => write(field, next),
-          })),
-          h(SelectRow, {
-            title: c.language,
-            hint: c.languageHint,
-            value: pick(value.language, 'auto'),
-            options: languageOptions,
-            disabled: disabled || busy !== null,
-            onChange: (next) => write('language', next),
-          }),
-          h(Row, {
-            title: c.label('titleFromSession'),
-            hint: c.hint('titleFromSession'),
-            checked: pick(value.titleFromSession, true),
-            disabled: disabled || busy !== null,
-            onChange: (next) => write('titleFromSession', next),
-          }),
-          h(TextRow, {
-            title: c.label('customTitle'),
-            hint: c.hint('customTitle'),
-            placeholder: c.customTitlePlaceholder,
-            value: pick(value.customTitle, ''),
-            disabled: disabled || busy !== null,
-            onCommit: (next) => write('customTitle', next),
-          }),
-          h(TextRow, {
-            title: c.label('customBody'),
-            hint: c.hint('customBody'),
-            placeholder: c.customBodyPlaceholder,
-            value: pick(value.customBody, ''),
-            disabled: disabled || busy !== null,
-            onCommit: (next) => write('customBody', next),
-          }),
+          // The master switch: on its own row, styled as the card's primary
+          // control rather than as one entry among peers.
+          h('div', { style: s.masterRow },
+            h('span', { style: s.rowText },
+              h('span', { style: s.masterTitle }, c.label('enabled')),
+              h('span', { style: s.rowHint }, c.hint('enabled'))),
+            h(Switch, {
+              title: c.label('enabled'),
+              checked: masterOn,
+              disabled: readOnly || busyNow,
+              onChange: (next) => write('enabled', next),
+            }),
+          ),
+
+          // The dependent settings, dimmed and inert while the master is off.
+          h('div', { style: masterOn ? s.group : { ...s.group, ...s.groupLocked } },
+            SWITCHES.filter((field) => field !== 'enabled').map((field) => h(Row, {
+              key: field,
+              title: c.label(field),
+              hint: c.hint(field),
+              checked: pick(value[field], false),
+              disabled: locked || busyNow,
+              onChange: (next) => write(field, next),
+            })),
+            NUMBERS.map((field) => h(NumberRow, {
+              key: field,
+              title: c.label(field),
+              hint: c.hint(field),
+              value: pick(value[field], 3),
+              disabled: locked || busyNow,
+              onCommit: (next) => write(field, next),
+            })),
+            h(SelectRow, {
+              title: c.language,
+              hint: c.languageHint,
+              value: pick(value.language, 'auto'),
+              options: languageOptions,
+              disabled: locked || busyNow,
+              onChange: (next) => write('language', next),
+            }),
+            h(Row, {
+              title: c.label('titleFromSession'),
+              hint: c.hint('titleFromSession'),
+              checked: pick(value.titleFromSession, true),
+              disabled: locked || busyNow,
+              onChange: (next) => write('titleFromSession', next),
+            }),
+            h(TextRow, {
+              title: c.label('customTitle'),
+              hint: c.hint('customTitle'),
+              placeholder: c.customTitlePlaceholder,
+              value: pick(value.customTitle, ''),
+              disabled: locked || busyNow,
+              onCommit: (next) => write('customTitle', next),
+            }),
+            h(TextRow, {
+              title: c.label('customBody'),
+              hint: c.hint('customBody'),
+              placeholder: c.customBodyPlaceholder,
+              value: pick(value.customBody, ''),
+              disabled: locked || busyNow,
+              onCommit: (next) => write('customBody', next),
+            }),
+          ),
           error === null ? null : h('p', { style: s.error }, error),
-          disabled ? h('p', { style: s.empty }, c.readonly) : null,
+          readOnly ? h('p', { style: s.empty }, c.readonly) : null,
         ),
       )
+    }
+
+    /** The switch control on its own, shared by the master row and every Row. */
+    function Switch(props) {
+      const { title, checked, disabled, onChange } = props
+      return h('button', {
+        type: 'button',
+        role: 'switch',
+        'aria-checked': checked,
+        'aria-label': title,
+        disabled,
+        onClick: () => onChange(!checked),
+        style: {
+          ...s.track,
+          background: checked ? 'var(--dsw-alias-accent-info, #4d6bfe)' : 'var(--dsw-alias-border-weak, #444)',
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          opacity: disabled ? 0.5 : 1,
+        },
+      }, h('span', { style: { ...s.knob, transform: checked ? 'translateX(16px)' : 'translateX(0)' } }))
     }
 
     /** A labelled switch with a description underneath. */
@@ -492,20 +540,7 @@ window.__ModuleLoader__.load({
         h('span', { style: s.rowText },
           h('span', { style: s.rowTitle }, title),
           hint === '' ? null : h('span', { style: s.rowHint }, hint)),
-        h('button', {
-          type: 'button',
-          role: 'switch',
-          'aria-checked': checked,
-          'aria-label': title,
-          disabled,
-          onClick: () => onChange(!checked),
-          style: {
-            ...s.track,
-            background: checked ? 'var(--dsw-alias-accent-info, #4d6bfe)' : 'var(--dsw-alias-border-weak, #444)',
-            cursor: disabled ? 'not-allowed' : 'pointer',
-            opacity: disabled ? 0.5 : 1,
-          },
-        }, h('span', { style: { ...s.knob, transform: checked ? 'translateX(16px)' : 'translateX(0)' } })),
+        h(Switch, { title, checked, disabled, onChange }),
       )
     }
 
@@ -719,16 +754,27 @@ window.__ModuleLoader__.load({
         background: 'var(--dsw-alias-bg-weak, rgba(127,127,127,0.06))',
         border: '1px solid var(--dsw-alias-border-weak, rgba(127,127,127,0.16))',
       },
-      cardHead: { marginBottom: '8px' },
-      cardTitle: {
-        fontSize: '14px',
+      // Page head, outside the card: an h2 title with its description under it,
+      // the way the settings shell titles its own pages.
+      pageHead: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        gap: '16px',
+        padding: '2px 2px 14px',
+      },
+      pageHeadText: { display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0 },
+      pageTitle: {
+        margin: 0,
+        fontSize: '18px',
         fontWeight: 600,
+        lineHeight: '26px',
         color: 'var(--dsw-alias-text-default, inherit)',
       },
-      cardDesc: {
-        margin: '4px 0 0',
-        fontSize: '12px',
-        lineHeight: 1.5,
+      pageDesc: {
+        margin: 0,
+        fontSize: '12.5px',
+        lineHeight: 1.55,
         color: 'var(--dsw-alias-text-weak, rgba(127,127,127,0.9))',
       },
       row: {
@@ -741,6 +787,34 @@ window.__ModuleLoader__.load({
       },
       rowText: { display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 },
       rowTitle: { fontSize: '13px', color: 'var(--dsw-alias-text-default, inherit)' },
+      // The master switch sits above the dependent group: larger label, no
+      // separator above it, and a hairline below to tie the group to it.
+      masterRow: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '16px',
+        padding: '10px 0 12px',
+        borderTop: '1px solid var(--dsw-alias-border-weak, rgba(127,127,127,0.12))',
+        borderBottom: '1px solid var(--dsw-alias-border-weak, rgba(127,127,127,0.12))',
+        marginBottom: '2px',
+      },
+      masterTitle: {
+        fontSize: '14px',
+        fontWeight: 500,
+        color: 'var(--dsw-alias-text-default, inherit)',
+      },
+      group: {
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'opacity 120ms ease',
+      },
+      // Dependent settings stay visible but read as unavailable.
+      groupLocked: {
+        opacity: 0.45,
+        pointerEvents: 'none',
+        userSelect: 'none',
+      },
       rowHint: {
         fontSize: '11.5px',
         lineHeight: 1.45,

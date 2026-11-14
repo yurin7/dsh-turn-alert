@@ -6,7 +6,7 @@
 
 DSH 在回答完成时本身没有任何桌面提示。本插件监听 Session 事件流里的 `turn/end`，对值得打扰你的回合闪烁任务栏并弹出通知。
 
-![一轮对话结束时，通知标题就是当前对话标题，同时任务栏图标在闪烁](docs/preview.notify.zh.svg)
+![通知标题是当前对话标题，正文为本轮对话已完成。](docs/preview-toast.png)
 
 ## 安装
 
@@ -36,7 +36,7 @@ dsh plugin --profile web add ./dsh-turn-alert-1.2.1.tgz
 | 任务栏闪烁 | 对桌面窗口调用 `FlashWindowEx`，直到你切回窗口 | **闪烁任务栏图标** |
 | 系统通知 | 归属于 `com.deepseek.dsh` 的 Windows toast | **系统通知** |
 
-![回答完成提醒设置项：各开关，右侧为打开的通知语言菜单](docs/preview.settings.zh.svg)
+![回答完成提醒设置页：总开关、任务栏闪烁、系统通知、前台、子代理与失败开关、最短间隔、通知语言，以及自定义标题和正文](docs/preview-settings.png)
 
 子代理回合默认两种都不提醒：那是内部调度，不是你在等的回答。需要时用 **子代理也提醒** 打开。
 

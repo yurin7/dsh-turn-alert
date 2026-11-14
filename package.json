@@ -38,13 +38,21 @@
     "dsh": ">=0.2.2-rc.1"
   },
   "peerDependencies": {
-    "@deepseek-ai/schemastery": "*"
+    "@deepseek-ai/schemastery": "^3.18.2"
   },
   "peerDependenciesMeta": {
     "@deepseek-ai/schemastery": {
       "optional": true
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yurin7/dsh-turn-alert.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yurin7/dsh-turn-alert/issues"
+  },
+  "homepage": "https://github.com/yurin7/dsh-turn-alert#readme",
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"

@@ -13,13 +13,13 @@ DSH 在回答完成时本身没有任何桌面提示。本插件监听 Session �
 从 Git 安装 —— 不发布 npm 也能用的方式：
 
 ```sh
-dsh plugin --profile web add github:ako-rin/dsh-turn-alert
+dsh plugin --profile web add github:yurin7/dsh-turn-alert
 ```
 
 或者从本地克隆、打包好的 tarball 安装：
 
 ```sh
-git clone https://github.com/ako-rin/dsh-turn-alert.git
+git clone https://github.com/yurin7/dsh-turn-alert.git
 dsh plugin --profile web add ./dsh-turn-alert
 # 或
 dsh plugin --profile web add ./dsh-turn-alert-1.2.1.tgz

@@ -13,13 +13,13 @@ DeepSeek Harness raises no desktop signal of its own when a reply completes. Thi
 From a Git checkout — this is the route that works without publishing to npm:
 
 ```sh
-dsh plugin --profile web add github:ako-rin/dsh-turn-alert
+dsh plugin --profile web add github:yurin7/dsh-turn-alert
 ```
 
 Or from a local clone or the packaged tarball:
 
 ```sh
-git clone https://github.com/ako-rin/dsh-turn-alert.git
+git clone https://github.com/yurin7/dsh-turn-alert.git
 dsh plugin --profile web add ./dsh-turn-alert
 # or
 dsh plugin --profile web add ./dsh-turn-alert-1.2.1.tgz

@@ -31,10 +31,10 @@ Requires `dsh` 0.2.2-rc.1 or newer, on Windows.
 
 ## What it does
 
-| Signal | How | Setting |
+| Signal | What you see | Setting |
 | --- | --- | --- |
-| Taskbar flash | `FlashWindowEx` on the Desktop window, until you activate it | **闪烁任务栏图标** |
-| System notification | Windows toast attributed to `com.deepseek.dsh` | **系统通知** |
+| Taskbar flash | The app button keeps flashing until you switch back to the window | **闪烁任务栏图标** |
+| System notification | A Windows notification from DeepSeek Harness | **系统通知** |
 
 Both are skipped by default for subagent turns: those are internal delegation, not a reply you are waiting on. Turn them on with **子代理也提醒**.
 
@@ -42,7 +42,7 @@ Both are skipped by default for subagent turns: those are internal delegation, n
 
 ## Settings
 
-Every switch is part of the plugin's Config schema and marked `volatile`, so the Settings page edits them live — no restart, and the running listener picks up the new values on the next turn.
+Open **Settings → 回答完成提醒**. Turning the master switch off disables everything below it. Changes apply immediately — no restart.
 
 | Option | Default | Meaning |
 | --- | --- | --- |
@@ -57,7 +57,7 @@ Every switch is part of the plugin's Config schema and marked `volatile`, so the
 | `titleFromSession` | `true` | Use the conversation title as the notification headline. |
 | `customTitle` | empty | Custom headline. Empty keeps the conversation title or built-in copy. |
 | `customBody` | empty | Custom body. Empty keeps the built-in copy. |
-| `appUserModelId` | `com.deepseek.dsh` | AUMID the notification is attributed to. |
+| `appUserModelId` | `com.deepseek.dsh` | The app identity the notification is shown under. |
 | `trace` | `false` | Write one diagnostic line per turn end to `%TEMP%\dsh-turn-alert.log`. |
 
 ### Custom text
@@ -104,25 +104,6 @@ The same values can be written into `cordis.patch.yml`, which is what the Settin
     includeSubagents: true
     cooldownSeconds: 10
 ```
-
-## How it reaches the window
-
-The Host runs as a Node-mode child of the Desktop shell and holds no Electron window handle. The plugin therefore:
-
-1. Walks its own parent-process chain and collects the pids running the same executable as the shell. This identifies the shell regardless of process id, install path, or which child loaded the plugin.
-2. Enumerates that process's visible top-level windows and calls `FlashWindowEx` with `FLASHW_ALL | FLASHW_TIMERNOFG`, so the taskbar button flashes until focus arrives rather than for a fixed count.
-3. Raises the toast through the shell's registered AppUserModelID.
-
-Win32 calls go through `koffi`, which the Desktop build ships. Toast raising needs WinRT, which a plain Node runtime cannot load, so it runs in a short-lived hidden PowerShell process. That child must stay attached: a detached, `unref`'d child exits without delivering the toast and hides its exit status. It is never awaited, so a turn never waits for it.
-
-## Limitations
-
-- A turn that ends in `aborted` or `interrupted` stays silent: those mean you stopped it or the process died.
-- Taskbar flash and toast are Windows-only. On other platforms the plugin loads and does nothing.
-- The taskbar flash needs `koffi`. The packaged Desktop ships it; a plain `dsh web` install usually does not. Without it the plugin still raises the notification and logs one warning, so the feature degrades instead of failing.
-- A toast is attributed to the app AUMID, so clicking it focuses DeepSeek Harness rather than a specific conversation.
-- Windows Focus Assist and notification settings can suppress the toast; the taskbar flash is an independent signal.
-- `FlashWindowEx` returning `false` is not a failure: per Win32 semantics it reports that the window was not already flashing, so the return value is ignored.
 
 ## License
 

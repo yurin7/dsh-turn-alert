@@ -31,10 +31,10 @@ dsh plugin --profile web add ./dsh-turn-alert-1.2.1.tgz
 
 ## 它做什么
 
-| 提醒方式 | 实现 | 开关 |
+| 提醒方式 | 你会看到什么 | 开关 |
 | --- | --- | --- |
-| 任务栏闪烁 | 对桌面窗口调用 `FlashWindowEx`，直到你切回窗口 | **闪烁任务栏图标** |
-| 系统通知 | 归属于 `com.deepseek.dsh` 的 Windows toast | **系统通知** |
+| 任务栏闪烁 | 应用按钮持续闪烁，直到你切回窗口 | **闪烁任务栏图标** |
+| 系统通知 | 一条来自 DeepSeek Harness 的 Windows 通知 | **系统通知** |
 
 ![回答完成提醒设置页：总开关、任务栏闪烁、系统通知、前台、子代理与失败开关、最短间隔、通知语言，以及自定义标题和正文](docs/preview-settings.png)
 
@@ -42,7 +42,7 @@ dsh plugin --profile web add ./dsh-turn-alert-1.2.1.tgz
 
 ## 设置
 
-所有开关都在插件的 Config schema 里并标了 `volatile`，因此设置页改完**即时生效**，不用重启，监听器在下一回合读到新值。
+打开 **设置 → 回答完成提醒**。关闭顶部的总开关后，下面所有选项都会禁用。改完即时生效，不用重启。
 
 | 配置项 | 默认 | 含义 |
 | --- | --- | --- |
@@ -57,7 +57,7 @@ dsh plugin --profile web add ./dsh-turn-alert-1.2.1.tgz
 | `titleFromSession` | `true` | 通知标题用当前这场对话的标题。 |
 | `customTitle` | 空 | 自定义标题。留空则用对话标题或内置文案。 |
 | `customBody` | 空 | 自定义正文。留空则用内置文案。 |
-| `appUserModelId` | `com.deepseek.dsh` | 通知归属的 AUMID。 |
+| `appUserModelId` | `com.deepseek.dsh` | 通知显示在哪个应用身份下。 |
 | `trace` | `false` | 每次回合结束往 `%TEMP%\dsh-turn-alert.log` 写一行诊断。 |
 
 ### 自定义提醒内容
@@ -104,25 +104,6 @@ dsh plugin --profile web add ./dsh-turn-alert-1.2.1.tgz
     includeSubagents: true
     cooldownSeconds: 10
 ```
-
-## 它怎么找到窗口
-
-Host 是桌面外壳的 Node 模式子进程，手里没有 Electron 窗口句柄，所以插件：
-
-1. 沿自己的父进程链向上，收集运行同一可执行文件的进程号 —— 这样不管进程号怎么变、装在哪、哪个子进程加载了插件，都能认准外壳；
-2. 枚举该进程的可见顶层窗口，调用 `FlashWindowEx`，标志 `FLASHW_ALL | FLASHW_TIMERNOFG`（`FLASHW_ALL` 同时闪标题栏和任务栏按钮，`FLASHW_TIMERNOFG` 表示一直闪到你切换过去，而不是固定次数）；
-3. 通过外壳注册的 AppUserModelID 弹出 toast。
-
-Win32 调用走 `koffi`，桌面版自带。弹 toast 需要 WinRT，普通 Node 运行时加载不了，所以放在一个短暂隐藏的 PowerShell 进程里执行。该子进程必须保持 attach：`detached` + `unref` 的子进程会直接退出、通知根本发不出去，还吞掉退出码。插件只是不 await 它，所以回合不会等通知。
-
-## 限制
-
-- 以 `aborted` 或 `interrupted` 结束的回合不提醒：那是你主动停了，或者进程挂了。
-- 任务栏闪烁和 toast 仅 Windows。其他平台插件能加载但什么都不做。
-- 任务栏闪烁依赖 `koffi`。桌面版自带；普通 `dsh web` 安装通常没有。缺它时插件照常发通知并记一条警告，是降级而不是报错。
-- toast 归属于应用 AUMID，点它只会聚焦 DSH，不会跳到具体会话。
-- Windows 专注助手和通知设置可能压掉 toast；任务栏闪烁是独立的另一路信号。
-- `FlashWindowEx` 返回 `false` 不是失败：按 Win32 语义它表示"调用前该窗口本来就没在闪"，所以插件忽略这个返回值。
 
 ## 许可
 
